@@ -1,8 +1,12 @@
-
+import { Button, Typography } from '@mui/material'
+import { Layout } from '../components/layouts';
 
 const HomePage = () => {
   return (
-    <h1>hola mundo</h1>
+    <Layout title='Home'>
+
+      <Typography variant='h1' color='primary'>Hola mundo</Typography>
+    </Layout>
   )
 }
 
