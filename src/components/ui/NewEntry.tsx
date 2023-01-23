@@ -4,12 +4,13 @@ import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { useContext } from 'react';
 import { EntriesContext } from '../../context/entries';
+import { UIContext } from '../../context/ui';
 
 export const NewEntry = () => {
 
   const { addEntry } = useContext(EntriesContext);
 
-  const [isAdding, setIsAdding] = useState(false)
+  const {isAddingEntry, setIsAddingEntry} = useContext(UIContext)
 
   const [inputValue, setInputValue] = useState('');
 
@@ -26,7 +27,7 @@ export const NewEntry = () => {
 
     addEntry(inputValue);
 
-    setIsAdding(false);
+    setIsAddingEntry(false);
     setTouched(false);
     setInputValue('');
   }
@@ -39,7 +40,7 @@ export const NewEntry = () => {
       }}
     >
       {
-        isAdding
+        isAddingEntry
           ?
           (
             <>
@@ -65,7 +66,7 @@ export const NewEntry = () => {
                 justifyContent='space-between'
                 paddingX={5}
               >
-                <Button variant='outlined' color='error' endIcon={<SaveRoundedIcon />} onClick={() => setIsAdding(false)}>
+                <Button variant='outlined' color='error' endIcon={<SaveRoundedIcon />} onClick={() => setIsAddingEntry(false)}>
                   Cancelar
                 </Button>
 
@@ -82,7 +83,7 @@ export const NewEntry = () => {
               startIcon={<AddCircleOutlineRoundedIcon />}
               fullWidth
               variant='outlined'
-              onClick={() => setIsAdding(true)}
+              onClick={() => setIsAddingEntry(true)}
             >
               Agregar tarea
             </Button>

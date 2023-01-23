@@ -4,6 +4,8 @@ import { Layout } from '../components/layouts';
 import { EntriesList, NewEntry } from '../components/ui';
 
 const HomePage: NextPage = () => {
+
+
   return (
     <Layout title='Home - OpenJira'>
       <Grid container spacing={2}>
