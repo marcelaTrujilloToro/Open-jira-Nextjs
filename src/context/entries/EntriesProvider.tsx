@@ -6,7 +6,6 @@ import { entriesApi } from '../../../apis';
 
 export interface EntriesState {
   entries: Entry[];
-
 }
 
 
@@ -36,10 +35,16 @@ export const EntriesProvider = ({ children }: any) => {
 
   }
 
-  const entryUpdated = (entry: Entry) => {
+  const entryUpdated = async (entry: Entry) => {
+    try {
 
-    dispatch({ type: '[Entry] Entry-Updated', payload: entry });
+      const { data } = await entriesApi.put<Entry>(`/entries/${entry._id}`, { description: entry.description, status: entry.status });
 
+      dispatch({ type: '[Entry] Entry-Updated', payload: data });
+
+    } catch (error) {
+      console.log({ error });
+    }
   }
 
   const refreshEntries = async () => {

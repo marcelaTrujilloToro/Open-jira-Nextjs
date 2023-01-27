@@ -5,6 +5,7 @@ import { EntriesList, NewEntry } from '../components/ui';
 
 const HomePage: NextPage = () => {
 
+  
 
   return (
     <Layout title='Home - OpenJira'>
@@ -15,8 +16,8 @@ const HomePage: NextPage = () => {
             height: 'calc(100vh - 100px)'
           }}>
             <CardHeader title='Pendientes' />
-            <NewEntry/>
-            <EntriesList status='pending'/>
+            <NewEntry />
+            <EntriesList status='pending' />
           </Card>
         </Grid>
 
@@ -25,7 +26,7 @@ const HomePage: NextPage = () => {
             height: 'calc(100vh - 100px)'
           }}>
             <CardHeader title='En progreso' />
-            <EntriesList status='in-progress'/>
+            <EntriesList status='in-progress' />
 
           </Card>
         </Grid>
@@ -35,7 +36,7 @@ const HomePage: NextPage = () => {
             height: 'calc(100vh - 100px)'
           }}>
             <CardHeader title='Completadas' />
-            <EntriesList status='finished'/>
+            <EntriesList status='finished' />
 
           </Card>
         </Grid>

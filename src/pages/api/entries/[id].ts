@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import { db } from '../../../database';
 import { Entry, IEntry } from '../../../models';
 
-type Data = 
-  | {message: string}
+type Data =
+  | { message: string }
   | IEntry
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
@@ -12,16 +12,37 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   const { id } = req.query;
 
   if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: 'El id no es valido' + id })
+    return res.status(400).json({ message: 'El id no es valido ' + id })
   }
 
   switch (req.method) {
     case 'PUT':
       return updateEntry(req, res)
 
+    case 'GET':
+      return getEntry(req, res)
+
     default:
-      return res.status(400).json({ message: 'Metodo no existe' })
+      return res.status(400).json({ message: 'Metodo no existe' + req.method })
   }
+
+}
+
+const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+  const { id } = req.query;
+
+  await db.connect();
+
+  const entryInDB = await Entry.findById(id)
+
+  await db.disconnect();
+
+  if (!entryInDB) {
+    return res.status(400).json({ message: 'No hay entrada con ese ID: ' + id })
+  }
+
+  return res.status(200).json(entryInDB);
 
 }
 
@@ -34,6 +55,7 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const entryToUpdate = await Entry.findById(id)
 
   if (!entryToUpdate) {
+    await db.disconnect()
     return res.status(400).json({ message: 'No hay entrada con ese ID: ' + id })
   }
 
@@ -43,20 +65,19 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   } = req.body
 
   try {
-    
+
     // entryToUpdate.description = description;
     // entryToUpdate.status = status;
     // await entryToUpdate.save()
-    
-    const updatedEntry = await Entry.findByIdAndUpdate(id, { description, status }, {runValidators: true, new: true})
+
+    const updatedEntry = await Entry.findByIdAndUpdate(id, { description, status }, { runValidators: true, new: true })
     await db.disconnect();
     res.status(200).json(updatedEntry!)
 
-  } catch (error) {
-    console.log({error});
-    
+  } catch (error: any) {
+
     await db.disconnect();
-    res.status(400).json({message: error.errors.status.message})
-    
+    res.status(400).json({ message: error.errors.status.message })
+
   }
 }
