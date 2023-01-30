@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import CancelIcon from '@mui/icons-material/Cancel';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { useContext } from 'react';
 import { EntriesContext } from '../../context/entries';
@@ -66,7 +67,7 @@ export const NewEntry = () => {
                 justifyContent='space-between'
                 paddingX={5}
               >
-                <Button variant='outlined' color='error' endIcon={<SaveRoundedIcon />} onClick={() => setIsAddingEntry(false)}>
+                <Button variant='outlined' color='error' endIcon={<CancelIcon />} onClick={() => setIsAddingEntry(false)}>
                   Cancelar
                 </Button>
 
